@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}I miei ordini — AnchayShop{% endblock %}
+{% block content %}
+<h2 class="page-title">I miei ordini</h2>
+
+{% if orders %}
+<div class="styled-table">
+    <table class="table mb-0">
+        <thead>
+            <tr><th>#</th><th>Data</th><th>Stato</th><th>Totale</th></tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td><strong>#{{ order.id }}</strong></td>
+                <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                <td><span class="badge-{{ order.status }}">{{ order.get_status_display }}</span></td>
+                <td><strong>€ {{ order.total_price }}</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <div class="text-center py-5">
+        <div style="font-size:4rem">📦</div>
+        <p class="text-muted mt-3">Non hai ancora ordini.</p>
+        <a href="{% url 'store:product_list' %}" class="btn btn-gold mt-2">Inizia a fare shopping!</a>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Carrello — AnchayShop{% endblock %}
+{% block content %}
+<h2 class="page-title">Il tuo carrello</h2>
+
+{% if items %}
+<div class="styled-table">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Prodotto</th>
+                <th>Prezzo</th>
+                <th>Quantità</th>
+                <th>Subtotale</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><strong>{{ item.product.name }}</strong></td>
+                <td>€ {{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>€ {{ item.subtotal }}</td>
+                <td>
+                    <a href="{% url 'store:remove_from_cart' item.product.pk %}" class="btn btn-sm" style="color:red">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mt-4">
+    <h4>Totale: <strong>€ {{ total }}</strong></h4>
+    <a href="{% url 'store:checkout' %}" class="btn btn-gold btn-lg">
+        <i class="bi bi-check-circle"></i> Concludi ordine
+    </a>
+</div>
+{% else %}
+    <div class="text-center py-5">
+        <div style="font-size:4rem">🛒</div>
+        <p class="text-muted mt-3">Il carrello è vuoto.</p>
+        <a href="{% url 'store:product_list' %}" class="btn btn-gold mt-2">Vai al catalogo</a>
+    </div>
+{% endif %}
+{% endblock %}

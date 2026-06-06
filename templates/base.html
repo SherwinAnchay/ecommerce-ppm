@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AnchayShop{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAF7F2;
+            --dark: #1A1A1A;
+            --accent: #C8A97E;
+            --accent-dark: #A8895E;
+            --muted: #6B6B6B;
+            --card-bg: #FFFFFF;
+            --border: #E8E2D9;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: var(--dark) !important;
+            padding: 1.2rem 0;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--accent) !important;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: #ccc !important;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            padding: 0.4rem 1rem !important;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover { color: var(--accent) !important; }
+
+        .nav-link.special {
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            color: var(--accent) !important;
+            margin-left: 0.5rem;
+        }
+
+        /* HERO BANNER (solo homepage) */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--dark) 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(200,169,126,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-banner h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--accent);
+        }
+
+        .hero-banner p {
+            color: #ccc;
+            font-size: 1.1rem;
+            max-width: 500px;
+        }
+
+        /* CARDS PRODOTTI */
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.25s, box-shadow 0.25s;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-card-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f0ebe3, #e8e2d9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--accent);
+        }
+
+        .product-card-body {
+            padding: 1.2rem;
+        }
+
+        .product-category-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* BOTTONI */
+        .btn-gold {
+            background-color: var(--accent);
+            color: var(--dark);
+            border: none;
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.85rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--accent-dark);
+            color: var(--dark);
+        }
+
+        .btn-outline-gold {
+            border: 1.5px solid var(--accent);
+            color: var(--accent);
+            background: transparent;
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .btn-outline-gold:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        /* SEARCH BAR */
+        .search-bar {
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .search-bar input, .search-bar select {
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+        }
+
+        .search-bar input:focus, .search-bar select:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(200,169,126,0.15);
+        }
+
+        /* TABELLE */
+        .styled-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .styled-table thead {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        .styled-table th {
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            padding: 1rem 1.2rem;
+            border: none;
+        }
+
+        .styled-table td {
+            padding: 0.9rem 1.2rem;
+            border-color: var(--border);
+            vertical-align: middle;
+        }
+
+        /* FORMS */
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .form-card h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .form-card input, .form-card select, .form-card textarea {
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            padding: 0.55rem 0.9rem;
+            width: 100%;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            margin-bottom: 0.3rem;
+        }
+
+        .form-card input:focus, .form-card select:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(200,169,126,0.15);
+        }
+
+        /* ALERTS */
+        .alert {
+            border-radius: 8px;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .alert-success { background: #d4edda; color: #155724; }
+        .alert-error, .alert-danger { background: #f8d7da; color: #721c24; }
+        .alert-info { background: #d1ecf1; color: #0c5460; }
+
+        /* BADGE STATO ORDINE */
+        .badge-pending { background: #FFF3CD; color: #856404; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+        .badge-confirmed { background: #D1ECF1; color: #0C5460; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+        .badge-shipped { background: #CCE5FF; color: #004085; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+        .badge-delivered { background: #D4EDDA; color: #155724; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+
+        /* PAGE TITLE */
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.7rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: #888;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 4rem;
+            font-size: 0.85rem;
+        }
+
+        footer span { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'store:product_list' %}">✦ AnchayShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ms-auto align-items-center">
+                {% if user.is_authenticated %}
+                    {% if user.is_manager %}
+                        <a class="nav-link" href="{% url 'store:manager_dashboard' %}">
+                            <i class="bi bi-grid"></i> Dashboard
+                        </a>
+                    {% endif %}
+                    <a class="nav-link" href="{% url 'store:cart' %}">
+                        <i class="bi bi-bag"></i> Carrello
+                    </a>
+                    <a class="nav-link" href="{% url 'store:order_list' %}">
+                        <i class="bi bi-receipt"></i> Ordini
+                    </a>
+                    <a class="nav-link special" href="{% url 'accounts:logout' %}">
+                        <i class="bi bi-person"></i> {{ user.username }}
+                    </a>
+                {% else %}
+                    <a class="nav-link" href="{% url 'accounts:login' %}">Accedi</a>
+                    <a class="nav-link special" href="{% url 'accounts:register' %}">Registrati</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    <p>© 2026 <span>AnchayShop</span> — Progetto Back-end PPM</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
