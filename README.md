@@ -77,4 +77,4 @@ prodotti e account demo pronti per essere testati.
 9. Provare ad accedere alla Dashboard Manager con `user_demo` per verificare che venga negato l'accesso (aggiungere "/manager/" alla fine del link)
 
 ## Deployment
-https://ecommerce-ppm-b8iv.onrender.com  ← sostituisci con il tuo URL reale
+https://ecommerce-ppm-b8iv.onrender.com  
